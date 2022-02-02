@@ -1,0 +1,26 @@
+We are considering bad effect caused by improper actions:
+
+# SQL/Javascript Injection attack
+This is what I have been taught in a network course. Basically, sometimes user enter some texts then send it to the server. Usually what the users submit will be passed to an sql query as variables. But what if malicious users type in some texts like sql sentences breaking the normal query or javascript code stealing secret information or causing the unexpected effect? This will be extremely terrible.
+Some features in our app require user to fill out and submit a form to build a user profile or make a request.
+We are supposed to check the validation of input the server gets to make sure it won't cause bad effect, if we want to get a high level system security.
+
+# improper actions taken by hard code a url
+Many features like see the details of a ride, or join/confirm/complete a ride and so on are implemented by specify the unique ride id in url to let server know which ride it is going to perform actions on. However, what if users directly type a url to do the action he/she is not supposed to do? For example, only the driver of a ride is able to mark the ride as complete.
+There are several possible solutions:
+We might encode the the ride id with a hash function users don't know, or we could randomly generating ride id instead of by an increasing order. But these two ways can only reduce the possibility the app is hacked. What is more reasonable way is double check the identity of requesting user to make sure he/she has the privilege to take the action.
+
+We are also considering problems caused by system crash:
+
+# Action required by users does not complete
+While a driver confirms a ride but the system suddenly crashes, owner and sharers in this ride do not receive a confirmation email. 
+
+# Data inconsistent among tables in database
+What is more dangerous is inconsistency in database. Tables in our system is defined based on the assumption that there is no invalid record. For instance, we assume that for every record s in Sharer, we could find a ride r in Ride where s.ride_id equals r.id. However, if we just update one table but not another one then the system crashes, strange bugs might occur.
+
+One possible solution is we keep a log to record all the action we have done. When the system recovers, we keep going completing untaken actions to keep the consistency. Or we need to carefully check the data consistency every time we access data which might be dirty.
+
+Trouble in version upgrade:
+
+# Migration version
+There might be inconsistent data in our table when we change the tables/models in our app. For example, we'd like to add a NOT NULL field to one of our tables. For those old data frame, no matter whether we drop them or set them a default value, unexpected affect might come in the future.
