@@ -1,0 +1,21 @@
+<!--base 作为模版，是每个页面上都会出现的部分-->
+{% extends "mysite/base2.html" %}
+{% block content %}
+<h1>Welcome {{ user.username }} !</h1>
+<h1>Your confirmed ride:</h1>
+    {% for ride in rides %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" >{{ ride.arrival_time }}</a>
+        </div>
+        <h2><a class="article-title" >{{ ride.destination }}</a></h2>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
+            <a href="{%url 'details' ride.id %} "><button>Selection</button></a>
+        </div>
+    </div>
+</article>
+    {% endfor %}
+
+
+{% endblock content%}

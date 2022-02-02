@@ -1,0 +1,60 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+<div class="media-body">
+    <div class="article-metadata">
+        <a class="mr-2"> Ride owner: {{ ride.owner}}</a></br>
+        ride info:</br>
+        {% if ride.status == 0 %}
+            status:<small class="text-muted">open</small></br>
+        {% else %}
+            {% if ride.status == 1 %}
+                status:<small class="text-muted">confirm</small></br>
+            {% else %}
+                status:<small class="text-muted">complete</small></br>
+            {% endif %}
+        {% endif %}
+        destination:<small class="text-muted">{{ ride.destination}}</small></br>
+        arrive time:<small class="text-muted">{{ ride.arrival_time}}</small></br>
+        special info: <small class="text-muted">{{ ride.special_info}}</small></br>
+        total passengers: <small class="text-muted">{{ ride.total_pp}}</small></br>
+        vehicle_type: <small class="text-muted">{{ ride.vehicle_type}}</small></br>
+        driver name: <small class="text-muted">{{ ride.driver}}</small></br>
+        sharer info:</br>
+        {% for s in sharers %}
+        sharer name: {{s.name}} party: {{s.party}}
+        {% endfor %}
+
+        <p class="placeholder-glow">
+            <span class="placeholder col-12 placeholder-xs"></span>
+        </p>
+        {% if ride.driver == user.username %}
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'complete_ride' ride.id %}">Complete</a>
+        </div>
+
+        {% else %}
+            {% if ride.owner == user.username %}
+                <div>
+                    <a href="{% url  'edit_ride' ride.id %}">
+                        <button>Edit the ride</button>
+                    </a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url  'cancel_ride' ride.id %}">Cancel</a>
+                    <a href="{% url  'mysite-home' %}">
+                        <button>Return to homepage</button>
+                    </a>
+                </div>
+            {% else %}
+                {% if ride.status == 0 %}
+                    <div>
+                     <a class="btn btn-success btn-sm mt-1 mb-1" href="{% url 'join_ride' ride.id %}">Join</a>
+                    </div>
+                {% else %}
+                    <div>
+                     <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'leave_ride' ride.id %}">Leave</a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

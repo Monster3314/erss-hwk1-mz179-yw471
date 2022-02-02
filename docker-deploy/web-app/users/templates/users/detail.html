@@ -1,0 +1,39 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+<div class="media-body">
+    <div class="article-metadata">
+        <a class="mr-2" > Ride owner: {{ ride.owner}}</a></br>
+        ride info:</br>
+        destination:<small class="text-muted">{{ ride.destination}}</small></br>
+        arrive time:<small class="text-muted">{{ ride.arrival_time}}</small></br>
+        status:<small class="text-muted">{{ ride.status}}</small></br>
+        special info: <small class="text-muted">{{ ride.status}}</small></br>
+        party: <small class="text-muted">{{ ride.party}}</small></br>
+
+        {% if ride.driver == user.username %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'complete_ride' ride.id %}">Complete</a>
+            </div>
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'confirm_ride' ride.id %}">Confirm</a>
+            </div>
+        {% else %}
+            {% if ride.owner == user.username %}
+                <div>
+                    <div class="d-grid gap-2 d-md-flex ">
+                    <a href="{% url  'edit_ride' ride.id %}"><button>Edit the ride</button></a>
+                    </div>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url  'cancel_ride' ride.id %}">Cancel</a>
+                </div>
+            {% else %}
+                <div>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'leave_ride' ride.id %}">Leave</a>
+                </div>
+                <div>
+                    <a class="btn btn-success btn-sm mt-1 mb-1" href="{% url 'join_ride' ride.id %}">Join</a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

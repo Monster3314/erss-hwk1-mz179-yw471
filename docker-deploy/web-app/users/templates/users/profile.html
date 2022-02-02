@@ -1,0 +1,16 @@
+{% extends "mysite/base2.html" %}
+{% block content %}
+
+    <div class="content-section">
+          <h2 class="account-heading">welcome {{ user.username }} !</h2>
+        </div>
+        <form>
+          vehicle_type: <a class="article-title" >{{ u_form.vehicle_type_registered }}</a> </br>
+          license_plate_number:<a class="article-title" >{{ u_form.license_plate_number }}</a> </br>
+          capacity_of_the_car:<a class="article-title" >{{ u_form.capacity_of_the_car }}</a> </br>
+          spacial_request:<a class="article-title" >{{ u_form.spacial_request }}</a> </br>
+        </form>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update_profile' %}">Update</a>
+
+
+{% endblock content %}

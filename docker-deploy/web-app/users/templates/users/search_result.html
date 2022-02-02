@@ -1,0 +1,21 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+    {% for ride in rides %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" >{{ ride.arrival_time }}</a>
+        </div>
+        <h2><a class="article-title" >{{ ride.destination }}</a></h2>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
+            <a href="{% url 'details' ride.id %}">
+            <input type=button class="btn btn-success" value="Select for more details">
+            </a>
+        </div>
+
+    </div>
+</article>
+    {% endfor %}
+
+
+{% endblock content%}

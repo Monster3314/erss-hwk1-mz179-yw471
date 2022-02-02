@@ -1,0 +1,35 @@
+{% extends "mysite/base2.html" %}
+{% block content %}
+<div class="media-body">
+    <div class="article-metadata">
+        <a class="mr-2"> Ride owner: {{ ride.owner}}</a></br>
+        ride info:</br>
+        {% if ride.status == 0 %}
+            status:<small class="text-muted">open</small></br>
+        {% else %}
+            {% if ride.status == 1 %}
+                status:<small class="text-muted">confirm</small></br>
+            {% else %}
+                status:<small class="text-muted">complete</small></br>
+            {% endif %}
+        {% endif %}
+        destination:<small class="text-muted">{{ ride.destination}}</small></br>
+        arrive time:<small class="text-muted">{{ ride.arrival_time}}</small></br>
+        special info: <small class="text-muted">{{ ride.special_info}}</small></br>
+        total passengers: <small class="text-muted">{{ ride.total_pp}}</small></br>
+        vehicle_type: <small class="text-muted">{{ ride.vehicle_type}}</small></br>
+        driver name: <small class="text-muted">{{ ride.driver}}</small></br>
+        sharer info:</br>
+        {% for s in sharers %}
+        sharer name: {{s.name}} party: {{s.party}}
+        {% endfor %}
+
+        <p class="placeholder-glow">
+            <span class="placeholder col-12 placeholder-xs"></span>
+        </p>
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'confirm_ride' ride.id %}">Confirm</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

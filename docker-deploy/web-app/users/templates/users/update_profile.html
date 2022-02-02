@@ -1,0 +1,18 @@
+{% extends "mysite/base2.html" %}
+{% block content %}
+    <div class="content-section">
+          <h2 class="account-heading">welcome {{ user.username }} !</h2>
+        </div>
+      </div>
+      <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Update your profile</legend>
+               {{ form.as_p }}
+          </fieldset>
+          <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Update</button>
+          </div>
+      </form>
+    </div>
+{% endblock content %}
